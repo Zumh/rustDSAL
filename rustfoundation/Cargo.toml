@@ -1,0 +1,13 @@
+[package]
+name = "rustfoundation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+[members]
+worksapce = [
+
+    "session1/hello_world",
+    "session1/variables",
+    
+]
