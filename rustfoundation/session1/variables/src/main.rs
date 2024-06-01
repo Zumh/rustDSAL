@@ -12,15 +12,42 @@ fn main() {
     // owner ship 
     greet(name);
 
-    // borrow
+    // borrow give me the access to the variable
     let borrow_name = "Borrow Johnny hello".to_string();
     greet_borrow(&borrow_name);
 
+    println!("\n");
+    // mutable borrowing
+    let mut mut_name = "Sammy mutable borrow string.".to_string();
+    greet_borrow_mut(&mut mut_name);
+    println!("mut name {mut_name}");
 
+    println!("\n");
 
+    // read line 
+    println!("## Read line ##");
+    let input:String = read_input_line();
+    println!("You type [{input}]");
+}
+
+fn read_input_line() -> String {
+    // how to read user input using read line stdio
+    // also we handle unexpected errors
+    let mut input = String::new();
+
+    std::io::stdin().read_line( &mut input).expect("Failed to read line");
+
+    input.trim().to_string() 
+}
+
+fn greet_borrow_mut(s: &mut String) {
+    println!("## Borrowing mutable variable name ##");
+    // give me the access vriable that you own.
+    *s = format!("Hello {s}");
 }
 
 fn greet_borrow(s: &String) {
+    // give me the access vriable that you own.
     println!("Borrowing variable name");
     
     println!("Hello {s}");
