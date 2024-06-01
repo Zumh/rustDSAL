@@ -36,8 +36,18 @@ fn main() {
     // platform specific integers
     let p1: usize = 1;
     let p2: isize = 1;
-    println!("pointer size unsigned integer :{p1} \npointer size signed integer : {p2}");
+    println!("pointer size unsigned integer :{p1} \npointer size signed integer : {p2}\n");
 
+    // Characters, &str, and String
+    let c1: char = 'c';
+    let s1: &str = "hello";
+    let s2: String = String::from("hello");
+    println!("Charters, &str, and String");
+    println!("{c1} {s1} {s2}");
+
+    // Arrays 
+    let a1: [i32; 5] = [1, 2, 3, 4, 5];
+    
 
 
 } 
