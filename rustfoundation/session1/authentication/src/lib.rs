@@ -19,7 +19,7 @@ pub enum LoginAction {
     Denied, 
 
 }
-
+#[derive(Debug, Clone)]
 pub struct User {
     username: String,
     password: String,
@@ -36,7 +36,7 @@ impl User {
     }
 }
 
-pub fn get_users() -> Vec<User; 2> {
+pub fn get_users() -> Vec<User> {
     vec![
         User::new("admin", "password", LoginRole::Admin),
         User::new("bob", "password", LoginRole::User)
