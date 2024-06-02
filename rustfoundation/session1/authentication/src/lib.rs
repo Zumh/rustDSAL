@@ -49,9 +49,9 @@ pub enum LoginRole {
 
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
 
-    let users: [User; 2] = get_users();
+    let users = get_users();
 
-    if let Some(user: &User) = users.iter().find(|user| user.username == username) {
+    if let Some(user) = users.iter().find(|user| user.username == username) {
         if user.password == password {
 
             return Some(LoginAction::Granted(user.role.clone()));
