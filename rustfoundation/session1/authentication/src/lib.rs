@@ -25,14 +25,19 @@ pub enum LoginRole {
     Admin, User
 }
 
-pub fn login(username: &str, password: &str) -> LoginAction {
+pub fn login(username: &str, password: &str) -> Option<LoginAction> {
     let username = username.to_lowercase();
+
+    if username != "admin" && password != "password" {
+       return  None
+    }
+
     if username == "admin" && password == "password" {
-        LoginAction::Granted(LoginRole::Admin)
+        Some(LoginAction::Granted(LoginRole::Admin))
     } else if username == "bob" && password == "password" {
-        LoginAction::Granted(LoginRole::User)
+        Some(LoginAction::Granted(LoginRole::User))
     } else {
-        LoginAction::Denied
+        Some(LoginAction::Denied) //LoginAction::Denied
     }
 
     //username.to_lowercase() == "admin" && password == "password" 

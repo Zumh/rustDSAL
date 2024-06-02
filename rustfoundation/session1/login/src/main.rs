@@ -11,14 +11,18 @@ fn main() {
         let password = read_input_line();
 
         match login(&username, &password){
-            LoginAction::Granted(role) => {
+            // LoginAction::Granted(authentication::LoginRole::Admin) => println!("Admin"),
+            Some(LoginAction::Granted(role)) => {
                 match role {
                     authentication::LoginRole::Admin => println!("Admin"),
                     authentication::LoginRole::User => println!("User"),
                 }
                 break;
             }
-            LoginAction::Denied => println!("Denied"),
+            Some(LoginAction::Denied) => println!("Denied"),
+            None => {
+                println!("Incorrect username or password");
+            }
         }
 
         println!("Incorrect username or password");
