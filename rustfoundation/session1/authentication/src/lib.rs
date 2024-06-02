@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 
 pub fn greet(name: &str) -> String{
     format!("Hello {name}")
@@ -19,11 +20,12 @@ pub enum LoginAction {
     Denied, 
 
 }
+
 #[derive(Debug, Clone)]
 pub struct User {
-    username: String,
-    password: String,
-    role: LoginRole,
+    pub username: String,
+    pub password: String,
+    pub role: LoginRole,
 }
 
 impl User {
@@ -68,7 +70,7 @@ pub enum LoginRole {
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
     let username = username.to_lowercase();
     let users = get_users();
-    if let some(user: &User) = users.get(&username) {
+    if let Some(user) = users.get(&username) {
 
         if user.password == password {
             return Some(LoginAction::Granted(user.role.clone()));
