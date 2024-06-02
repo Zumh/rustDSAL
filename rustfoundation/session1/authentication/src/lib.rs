@@ -36,11 +36,19 @@ impl User {
     }
 }
 
-pub fn get_users() -> [User; 2] {
-    [
+pub fn get_users() -> Vec<User; 2> {
+    vec![
         User::new("admin", "password", LoginRole::Admin),
         User::new("bob", "password", LoginRole::User)
     ]
+}
+
+pub fn get_admin_users(){
+    let users: Vec<String> = get_users()
+        .into_iter()
+        .filter(|u| u.role == LoginRole::Admin)
+        .map(|u| u.username)
+        .collect();
 }
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum LoginRole {
