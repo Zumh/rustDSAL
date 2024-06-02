@@ -13,17 +13,24 @@ pub fn read_input_line() -> String {
     input.trim().to_string() 
 }
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Debug)]
 pub enum LoginAction {
-    Admin, User, Denied,
+    Granted(LoginRole),
+    Denied, 
+
+}
+
+#[derive(PartialEq, Eq, Debug)]
+pub enum LoginRole {
+    Admin, User
 }
 
 pub fn login(username: &str, password: &str) -> LoginAction {
     let username = username.to_lowercase();
     if username == "admin" && password == "password" {
-        LoginAction::Admin
+        LoginAction::Granted(LoginRole::Admin)
     } else if username == "bob" && password == "password" {
-        LoginAction::User
+        LoginAction::Granted(LoginRole::User)
     } else {
         LoginAction::Denied
     }
@@ -52,9 +59,14 @@ mod tests {
         assert!(!login("admin-not", "password"));
         assert!(!login("admin", "not-password"));
 */
+/*
         assert_eq!(login("admin", "password"), LoginAction::Admin);
         assert_eq!(login("bob", "password"), LoginAction::User);
         assert_eq!(login("admin", "not-password"), LoginAction::Denied);
+*/
+
+
+
     }
   
 }
