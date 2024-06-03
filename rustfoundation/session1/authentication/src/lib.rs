@@ -4,6 +4,12 @@ use std::collections::HashMap;
 use std::path::Path;
 use serde::{Deserialize, Serialize};
 
+pub fn hash_password(password: &str) -> String{
+    use sha2::Digest;
+    let mut hasher = sha2::Sha256::new();
+    hasher.update(password);
+    format!("{:x}", hasher.finalize())
+}
 pub fn greet(name: &str) -> String{
     format!("Hello {name}")
 }
@@ -42,7 +48,8 @@ impl User {
     pub fn new(username: &str, password: &str, role: LoginRole) -> User {
         User {
             username: username.to_lowercase(),
-            password: password.to_string(),
+            //password: password.to_string(),
+            password: hash_password(password), 
             role
         }
     }
