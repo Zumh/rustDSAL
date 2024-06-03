@@ -110,6 +110,7 @@ pub fn get_admin_users(){
 
 pub fn login(username: &str, password: &str) -> Option<LoginAction> {
     let username = username.to_lowercase();
+    let password = hash_password(password);
     let users = get_users();
     if let Some(user) = users.get(&username) {
 
