@@ -71,6 +71,12 @@ pub fn get_default_users()-> HashMap<String, User> {
     users
 }
 
+// This function should save users to a file called "users.json"
+pub fn save_users(users: HashMap<String, User>){
+    let users_path = Path::new("users.json");
+    let users_json = serde_json::to_string(&users).unwrap();
+    std::fs::write(users_path, users_json).unwrap();
+}
 
 pub fn get_users()-> HashMap<String, User> {
     let users_path = Path::new("users.json");

@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use authentication::{get_users};
+use authentication::{LoginRole, User, get_users, save_users};
 
 
 #[derive(Parser)]
@@ -39,17 +39,38 @@ fn list_users(){
         println!("{:<20}{:20?}", user.username, user.role);
     });
 }
+
+fn add_user(username: String, password: String, admin: bool){
+    let mut users = get_users();
+
+    let role = if admin {
+        LoginRole::Admin
+    } else {
+        LoginRole::User
+    };
+
+    let user = User::new(&username, &password, role);
+
+    users.insert(username, user);
+
+    save_users(users);
+}
 fn main() {
     let cli = Args::parse();
 
     match cli.command{
         Some(Commands::List) => {
+            println!("## List of users ##");
+
             list_users();
-            //println!("List of users");
         }
+
         Some(Commands::Add { username, password, admin }) => {
-            println!("Add user: {} {}", username, password);
+            println!("## Add user: {} {} ##", username, password);
+            // the default for admin is false
+            add_user(username, password, admin.unwrap_or(false));
         }
+
         None => {
             println!("Run with --help to see instructions.");
         }
