@@ -33,6 +33,16 @@ enum Commands {
     Delete {
         /// User to delete
         username: String
+    },
+
+    /// Change a user's password
+    ChangePassword {
+        /// Username who's password should change
+        username: String,
+
+        /// New password
+        new_password: String
+
     }
 }
 
@@ -77,6 +87,18 @@ fn delete_user(username: String){
         println!("User not found");
     }
 }
+
+fn change_password(username: String, password: String){
+    let mut users = get_users();
+
+    if let Some(user) = users.get_mut(&username) {
+        user.password = authentication::hash_password(&password);
+        save_users(users);
+    } else {
+        println!("User not found");
+    }
+
+}
 fn main() {
     let cli = Args::parse();
 
@@ -98,6 +120,12 @@ fn main() {
             println!("## Delete user: {} ##", username);
 
             delete_user(username);
+        }
+
+        Some(Commands::ChangePassword {username, new_password}) => {
+            println!("## Change password: {} ##", username);
+
+            change_password(username, new_password);
         }
 
         None => {
