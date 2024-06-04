@@ -13,6 +13,19 @@ struct Args {
 enum Commands {
     /// List all users.
     List,
+
+    /// Add a user.
+    Add {
+        /// The user's login name
+        username: String,
+
+        /// The user's password (plaintext)
+        password: String,
+
+        /// Optional - mark as an admin
+        #[arg(long)]
+        admin: Option<bool>
+    }
 }
 
 fn list_users(){
