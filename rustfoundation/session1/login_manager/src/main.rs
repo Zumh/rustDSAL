@@ -47,6 +47,9 @@ fn main() {
             list_users();
             //println!("List of users");
         }
+        Some(Commands::Add { username, password, admin }) => {
+            println!("Add user: {} {}", username, password);
+        }
         None => {
             println!("Run with --help to see instructions.");
         }
