@@ -1,3 +1,5 @@
+//how to add a new user with new role and password
+// cargo run add -- admin true fred2 password
 use clap::{Parser, Subcommand};
 use authentication::{LoginRole, User, get_users, save_users};
 
@@ -25,6 +27,12 @@ enum Commands {
         /// Optional - mark as an admin
         #[arg(long)]
         admin: Option<bool>
+    },
+
+    /// Delete a user
+    Delete {
+        /// User to delete
+        username: String
     }
 }
 
@@ -41,6 +49,7 @@ fn list_users(){
 }
 
 fn add_user(username: String, password: String, admin: bool){
+    // get the users generated from get_users
     let mut users = get_users();
 
     let role = if admin {
@@ -49,26 +58,46 @@ fn add_user(username: String, password: String, admin: bool){
         LoginRole::User
     };
 
+    // this newly created user will be added
     let user = User::new(&username, &password, role);
 
     users.insert(username, user);
 
+    // we saved newly created users into file
     save_users(users);
+}
+
+fn delete_user(username: String){
+    let mut users = get_users();
+
+    if users.contains_key(&username){
+        users.remove(&username);
+        save_users(users);
+    }  else {
+        println!("User not found");
+    }
 }
 fn main() {
     let cli = Args::parse();
 
     match cli.command{
+        // this handle the list command
         Some(Commands::List) => {
             println!("## List of users ##");
 
             list_users();
         }
-
+        // this command handle Add
         Some(Commands::Add { username, password, admin }) => {
             println!("## Add user: {} {} ##", username, password);
             // the default for admin is false
             add_user(username, password, admin.unwrap_or(false));
+        }
+
+        Some (Commands::Delete {username}) => {
+            println!("## Delete user: {} ##", username);
+
+            delete_user(username);
         }
 
         None => {
